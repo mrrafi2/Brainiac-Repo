@@ -8,7 +8,6 @@ import Contact from "./pages/contact";
 import Write from "./pages/write";
 import Singup from "./pages/singup";
 import Login from "./pages/login";
-import PublicRoute from "./publicRoute";
 import PrivateRoute from "./privateRoute";
 import BlogDetails from "./pages/BlogDetails";
 import CategoryPage from "./pages/categoyPage";
@@ -166,19 +165,15 @@ const AppRoutes = () => {
 
           <Route
             path="/singup"
-            element={
-              <PublicRoute>
+            element={          
                 <Singup />
-              </PublicRoute>
             }
           />
 
           <Route
             path="/login"
             element={
-              <PublicRoute>
                 <Login />
-              </PublicRoute>
             }
           />
 
