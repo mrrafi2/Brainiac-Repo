@@ -1,0 +1,126 @@
+/* bookmark.module.css */
+
+/* Container with a soft pastel gradient and modern shadow */
+.container {
+    max-width: 1200px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 30px;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .homeBtn {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .homeBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  .homeBtn:active {
+    transform: scale(0.98);
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 27px;
+    margin-bottom: 70px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #ff512f, #dd2476);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .noData {
+    text-align: center;
+    color: #ff6600;
+    font-size: 20px;
+    margin-top: 30px;
+  }
+  
+  /* Grid Layout */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+  
+  .card {
+    background: linear-gradient(135deg, #ffffff, #fff5e6);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #ffeedd;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+    animation: cardFadeIn 0.5s ease-out;
+  }
+  @keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    border-color: #ff7e5f;
+  }
+  .card:active {
+    transform: scale(0.98);
+  }
+  
+  .cardTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+  }
+  .cardTitle:hover {
+    color: #ff7e5f;
+  }
+  
+  .cardMeta {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 6px;
+    background: linear-gradient(90deg, rgba(255, 200, 150, 0.2), rgba(255, 170, 130, 0.2));
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  .cardMeta:hover {
+    background: linear-gradient(90deg, rgba(255, 200, 150, 0.4), rgba(255, 170, 130, 0.4));
+  }
+  
+  .cardDate {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 6px;
+  }
+  
+  /* Responsive adjustments for screens up to 576px */
+  @media (max-width: 576px) {
+    .title {
+      font-size: 24px;
+    }
+    .grid {
+      gap: 20px;
+    }
+    .cardTitle {
+      font-size: 14px;
+    }
+    .cardMeta, .cardDate {
+      font-size: 12px;
+    }
+  }
+  

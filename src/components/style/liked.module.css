@@ -1,0 +1,129 @@
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #79e4fc, #96c7e6);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .homeBtn {
+    background: linear-gradient(135deg, #4facfe, #2f898e); 
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .homeBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  .homeBtn:active {
+    transform: scale(0.98);
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 27px;
+    margin-bottom: 70px;
+    font-weight: 700;
+     color: #555;
+   
+  }
+  
+  /* No data message styling */
+  .noData {
+    text-align: center;
+    color: #555;
+    font-size: 20px;
+    margin-top: 30px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+  
+  .card {
+    background: linear-gradient(135deg, #ffffff, #e6f7ff); /* Subtle blue gradient */
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #cce7ff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+    animation: fadeInUp 0.5s ease-out;
+  }
+  .card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    border-color: #00c6ff; 
+  }
+  .card:active {
+    transform: scale(0.98);
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .cardTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+  }
+  .cardTitle:hover {
+    color: #4facfe; 
+  }
+  
+  .cardMeta {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 6px;
+    background: linear-gradient(90deg, rgba(200, 255, 200, 0.2), rgba(150, 240, 220, 0.2)); 
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+  }
+  .cardMeta:hover {
+    background: linear-gradient(90deg, rgba(200, 255, 200, 0.4), rgba(150, 240, 220, 0.4));
+  }
+  
+  /* Card Date */
+  .cardDate {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  
+  .cardLikes {
+    font-size: 14px;
+    color: rgb(17, 97, 201); 
+    font-weight: bold;
+  }
+  
+  /* Responsive adjustments for mobile screens */
+  @media (max-width: 576px) {
+    .title {
+      font-size: 24px;
+    }
+    .grid {
+      gap: 20px;
+    }
+    .cardTitle {
+      font-size: 16px;
+    }
+    .cardMeta, .cardDate, .cardLikes {
+      font-size: 12px;
+    }
+  }
+  

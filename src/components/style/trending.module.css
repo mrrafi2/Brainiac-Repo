@@ -1,0 +1,172 @@
+/* Container for the trending page */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    /* A subtle gradient background added to the page container */
+    background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  }
+  
+  .homeBtn {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    z-index: 10;
+    background: linear-gradient(135deg, #ff6600, #e65c00);
+    color: #fff;
+    border-radius: 5px;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    padding: 8px 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .homeBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Page Title */
+  .pageTitle {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 50px;
+    color: #444;
+    font-weight: 600;
+  }
+  
+  /* Grid layout for trending cards */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+  
+  /* Trending Blog Card Styles */
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1.3px solid #e0e0e0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    /* Add a subtle animated gradient border overlay */
+    animation: borderGlow 4s ease-in-out infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  @keyframes borderGlow {
+    0% { border-image: linear-gradient(45deg, #ff758c, #ff7eb3) 1; }
+    50% { border-image: linear-gradient(45deg, #a8e063, #56ab2f) 1; }
+    100% { border-image: linear-gradient(45deg, #ff758c, #ff7eb3) 1; }
+  }
+  
+  .card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Card Title */
+  .title {
+    font-size: 17px;
+    font-weight: 500;
+    color: #222;
+    margin-bottom: 10px;
+    transition: color 0.3s;
+  }
+  .card:hover .title {
+    color: #ff6600;
+  }
+  
+  .meta {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 8px;
+    background: rgba(240,240,240, 0.6);
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.3s ease;
+  }
+  .meta:hover {
+    background: rgba(240,240,240, 0.8);
+  }
+  .meta span {
+    display: inline-block;
+  }
+  
+  .metrics {
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+
+  }
+  
+  /* Trending Score Badge */
+  .score {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ff6600;
+    padding-top: 4px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .pageTitle {
+      font-size: 24px;
+    }
+    .title {
+      font-size: 15px;
+    }
+    .meta,
+    .metrics,
+    .score {
+      font-size: 11px;
+    }
+    .grid {
+      gap: 20px;
+    }
+  }
+  
+  /* Additional Modern Animation for Card Content (Fade in and slight upward movement) */
+  .card > * {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: cardContentFade 0.6s forwards;
+  }
+  
+  @keyframes cardContentFade {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Delay each child animation for a cascading effect */
+  .card h3 { animation-delay: 0.1s; }
+  .card p:nth-child(2) { animation-delay: 0.2s; }
+  .card p:nth-child(3) { animation-delay: 0.3s; }
+  .card p:nth-child(4) { animation-delay: 0.4s; }
+  
+  /* Override for category badge (remains as before) */
+  .blog-category-wrapper {
+    margin-left: auto;
+  }
+  .blog-category {
+    font-size: 0.8rem;
+    background-color: #17a2b8;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 20px;
+    text-align: center;
+  }
+  
