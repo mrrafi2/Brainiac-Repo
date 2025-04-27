@@ -8,7 +8,7 @@ import Contact from "./pages/contact";
 import Write from "./pages/write";
 import Singup from "./pages/singup";
 import Login from "./pages/login";
-import PrivateRoute from "./privateRoute";
+import PrivateRoute from "./private";
 import BlogDetails from "./pages/BlogDetails";
 import CategoryPage from "./pages/categoyPage";
 import PrivacyPolicy from "./pages/privacy";
