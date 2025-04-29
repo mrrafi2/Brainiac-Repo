@@ -10,7 +10,6 @@ Brainiac Blogsite is a modern, futuristic, and advanced blogging platform built 
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
-- [Contact](#contact)
 
 ## Features
 
