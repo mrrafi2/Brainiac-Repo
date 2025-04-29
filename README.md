@@ -72,7 +72,7 @@ Brainiac Blogsite is a modern, futuristic, and advanced blogging platform built 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/mrrafi2/Brainiac.git
+   git clone git@github.com:mrrafi2/Brainiac-Repo.git
    cd brainiac
    ```
 
@@ -108,6 +108,7 @@ Brainiac Blogsite is a modern, futuristic, and advanced blogging platform built 
 
 Contributions are welcome! To contribute:
 1. Fork the repository.
+   
 2. Create a new branch:  
    ```bash
    git checkout -b feature/YourFeature
