@@ -3,7 +3,7 @@
 
 Brainiac Blogsite is a modern, futuristic, and advanced blogging platform built using React and Firebase. It combines traditional blogging elements with innovative features like real-time engagement tracking, personalized reading history, trending and ranking systems, advanced search, bookmarking, and more. Brainiac is designed to provide a seamless and immersive experience for both writers and readers.
 
-## Table of Contents
+## Table of Content
 - [Features](#features)
 - [Technology Stack](#technology-stack)
 - [Installation](#installation)
