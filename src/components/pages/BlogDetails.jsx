@@ -290,7 +290,7 @@ export default function BlogDetails() {
       <p className="" style={{color: darkMode ? "#fff" : "#333" }} >{new Date(blog.date).toLocaleDateString()}</p>
       <p style={{ color: "#ff6600", fontWeight: 500, marginBottom: '30px' }}>{blog.category}</p>
       
-      <div className=" mb-5 blog-content text-muted" dangerouslySetInnerHTML={{ __html: blog.content }} style={{color: darkMode ? "#ddd" : "#333", fontFamily: `"Inter", sans-serif` }} />
+      <div className=" mb-5 blog-content " dangerouslySetInnerHTML={{ __html: blog.content }} style={{color: darkMode ? "#ddd" : "#333", fontFamily: `"Inter", sans-serif` }} />
 
       <hr className="bg-secondary" style={{ height: "3px", opacity: 0.6 }} />
        
@@ -611,7 +611,7 @@ export default function BlogDetails() {
       font-size: 21px;
     }
     .blog-content {
-      font-size: 14px; 
+      font-size: 15px; 
     }
     .btn {
       font-size: 16px;

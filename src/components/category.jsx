@@ -74,8 +74,8 @@ export default function Category() {
             font-size: 17px;
           }
           .category-item {
-            padding: 8px 16px;
-            font-size: 14px;
+            padding: 9px 18px;
+            font-size: 15px;
           }
         }
       `}</style>

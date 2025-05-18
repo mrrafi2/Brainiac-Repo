@@ -1,0 +1,28 @@
+html {
+    scrollbar-width: thin;
+    scrollbar-color: #535353 #222;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #757575;
+    border-radius: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #00f, #0ff);
+    border-radius: 5px;
+    border: 2px solid #222;
+    box-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+    transform: scale(1.1);
+  }
+  

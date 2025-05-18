@@ -310,13 +310,13 @@ export default function SearchBar() {
 
          @media (max-width: 570px) {
           .search-bar {
-            max-width: 230px;
+            max-width: 240px;
             height: 35px;
             position: relative;
             left:-12px;
           }
           .search-input {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             padding-left: 15px;
           }
           .search-button {
@@ -324,19 +324,19 @@ export default function SearchBar() {
             padding: 0 11px;
           }
           .result-title {
-            font-size: 0.65rem;
+            font-size: 0.87rem;
           }
           .result-category {
-            font-size: 0.5rem;
+            font-size: 0.67rem;
           }
 
            .overlay {
-            height: 55vh !important;
+            height: 60vh !important;
             
           }
 
           .overlay .h4 {
-          font-size: 0.7rem 
+          font-size: 0.9rem 
           }
       }
       `}</style>

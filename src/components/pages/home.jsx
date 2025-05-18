@@ -187,7 +187,7 @@ export default function Home() {
             align-items: center;
             background: linear-gradient(90deg, rgba(10,10,10,0.9), rgba(30,30,30,0.9));
             backdrop-filter: blur(8px);
-            padding: 6px 12px;
+            padding: 7px 13px;
             position: sticky;
             top: 195px;
             z-index: 4000;
@@ -197,7 +197,7 @@ export default function Home() {
           .scrollspy-nav a {
             color: #fff;
             text-decoration: none;
-            font-size: 10px;
+            font-size: 12px;
             padding: 6px 8px;
             border-radius: 4px;
             transition: background 0.3s ease, transform 0.3s ease;
