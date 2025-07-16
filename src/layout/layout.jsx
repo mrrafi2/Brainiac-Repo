@@ -1,4 +1,3 @@
-import Footer from "../components/footer";
 import Header from "./header";
 
 export default function Layout ({children} ) {
