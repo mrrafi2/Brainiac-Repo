@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 import { ref, onValue, remove } from "firebase/database";
 import { database } from "../../firebases/firebase";
-import { Link, useNavigate } from "react-router-dom";
+import { Link  } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import image from "../images/bloggs.webp";
 
 export default function MyBlogs() {
   const { currentUser } = useAuth();
   const [myBlogs, setMyBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -41,9 +39,7 @@ export default function MyBlogs() {
     }
   };
 
-  const handleEdit = (id) => {
-    navigate("/write", { state: { editId: id } });
-  };
+  
 
   const popularBlogs = [...myBlogs]
     .sort((a, b) => (b.likes || 0) - (a.likes || 0))

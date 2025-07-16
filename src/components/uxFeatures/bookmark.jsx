@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import styles from "./style/bookmark.module.css"; 
+import styles from "../style/bookmark.module.css"; 
 
 export default function Bookmarks() {
   const [bookmarks, setBookmarks] = useState([]);
@@ -36,7 +36,6 @@ export default function Bookmarks() {
             id,
             ...record,
           }));
-          // Sort by timestamp descending (most recent first)
           items.sort((a, b) => b.timestamp - a.timestamp);
           setBookmarks(items);
         } else {

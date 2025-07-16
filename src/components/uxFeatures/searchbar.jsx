@@ -39,16 +39,14 @@ export default function SearchBar() {
     fetchBlogs();
   }, []);
 
-  // Compute overlay style when overlay is shown.
   useEffect(() => {
     if (showOverlay && containerRef.current) {
     const rect = containerRef.current.getBoundingClientRect();
 
-    // Adjust height and width based on screen size
     const isMobile = window.innerWidth < 768;
     const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
 
-    let overlayHeight = '60vh';
+    let overlayHeight = '70vh';
     let overlayWidth = rect.width;
     let overlayLeft = rect.left;
 
@@ -57,22 +55,21 @@ export default function SearchBar() {
       overlayWidth = window.innerWidth * 0.9;
       overlayLeft = window.innerWidth * 0.05;
     } else if (isTablet) {
-      overlayHeight = '65vh';
+      overlayHeight = '70vh';
     }
 
     setOverlayStyle({
-      position: 'fixed',
+      position:"fixed",
       top: rect.bottom + 10,
       left: overlayLeft,
       width: overlayWidth,
       height: overlayHeight,
       background: '#1a1a1a',
-      borderRadius: '12px',
       boxShadow: '0 8px 20px rgba(0,0,0,0.5)',
       overflowY: 'auto',
       zIndex: 999,
       padding: '20px',
-      maxWidth: '600px', // Optional cap
+      maxWidth: '600px',
     });
   }
 }, [showOverlay]);
@@ -122,7 +119,6 @@ export default function SearchBar() {
     }
   };
 
-  // When a result is clicked, update its seen count and navigate.
   const handleNavigate = async (id) => {
     const db = getDatabase();
     const postRef = ref(db, `blogs/${id}`);
@@ -238,7 +234,7 @@ export default function SearchBar() {
         }
 
         .overlay {
-            height: 50vh !important;
+         height: 65vh !important;
              z-index: 5000 !important;
 
         }

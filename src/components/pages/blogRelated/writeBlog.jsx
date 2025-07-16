@@ -58,7 +58,6 @@ export default function Write() {
     "Wellness", "Mindset", "Innovation"
   ];
 
-  // --- Optimized Quill modules & formats ---
   const modules = useMemo(() => ({
     toolbar: [
       [{ header: [1, 2, 3, false] }],
@@ -90,7 +89,6 @@ export default function Write() {
     return () => clearTimeout(timer);
   }, [content]);
 
-  // --- Grammar suggestions ---
   useEffect(() => {
     const plain = debouncedContent.replace(/<[^>]+>/g, " ").trim();
     if (!plain) return;
@@ -112,7 +110,6 @@ export default function Write() {
     });
   };
 
-  // --- Tab to accept suggestion ---
   useEffect(() => {
     const editor = quillRef.current?.getEditor();
     const onKeyDown = e => {
@@ -133,7 +130,6 @@ export default function Write() {
     return () => editor?.root.removeEventListener('keydown', onKeyDown);
   }, []);
 
-  // --- Tag handlers ---
   const handleTagKey = e => {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
@@ -150,7 +146,6 @@ export default function Write() {
   const data = new FormData();
   data.append("file", coverFile);
 
-  // Read from import.meta.env for Vite
   const preset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   data.append("upload_preset", preset);
@@ -177,7 +172,6 @@ const turndownService = new TurndownService({
 
 turndownService.use(gfm);
 
-  // --- Handle publish ---
   const handleUpload = async e => {
     e.preventDefault();
     if (!currentUser) return alert('You must be logged in.');
@@ -212,7 +206,6 @@ turndownService.use(gfm);
     <>
       
       <div className="modern-write-container">
-        {/* Header */}
         <div className="write-header">
           <div className="container-fluid">
             <div className="row align-items-center">

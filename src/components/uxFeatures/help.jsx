@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./style/help.module.css";
+import styles from "../style/help.module.css";
 import {Link} from "react-router-dom"
 
 export default function HelpFAQ() {

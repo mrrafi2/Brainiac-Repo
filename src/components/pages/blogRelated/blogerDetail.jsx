@@ -3,7 +3,7 @@ import { getDatabase, ref, get } from "firebase/database";
 import { useParams, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import Blog from "../../blogs/blogCard"; 
-import styles from "../style/blogger.module.css"; 
+import styles from "../../style/blogger.module.css"; 
 
 const getColorFromString = (str) => {
   if (!str) return "#ccc";

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { database } from "../../firebases/firebase";
 import { ref, get, runTransaction } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import styles from "../style/trending.module.css";
+import styles from "../../style/trending.module.css";
 
 const lambda = 0.1; // Decay constant
 

@@ -1,6 +1,6 @@
  import { useParams, Link,useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import styles from "../style/BlogDetails.module.css";
+import styles from "../../style/BlogDetails.module.css";
 import { database } from "../../firebases/firebase";
 import {getDatabase, ref, onValue, update, set, push, serverTimestamp,remove } from "firebase/database";
 import { getAuth,onAuthStateChanged } from "firebase/auth";

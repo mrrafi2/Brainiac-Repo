@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import styles from "./style/history.module.css";
+import styles from "../style/history.module.css";
 
 export default function History() {
   const [historyItems, setHistoryItems] = useState([]);

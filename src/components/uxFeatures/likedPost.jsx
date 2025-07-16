@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import styles from "./style/liked.module.css";
+import styles from "../style/liked.module.css";
 
 export default function Liked() {
   const [likedBlogs, setLikedBlogs] = useState([]);
@@ -38,11 +38,9 @@ export default function Liked() {
             id,
             ...blog,
           }));
-          // Filter blogs that have likedBy array including the current user's uid
           const filtered = allBlogs.filter(
             (blog) => blog.likedBy && blog.likedBy.includes(currentUser.uid)
           );
-          // Optional: sort the liked blogs (e.g., by likes descending)
           filtered.sort((a, b) => b.likes - a.likes);
           setLikedBlogs(filtered);
         } else {

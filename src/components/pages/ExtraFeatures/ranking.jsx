@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getDatabase, ref, get } from "firebase/database";
 import { useNavigate } from "react-router-dom";
-import styles from "../style/ranking.module.css";
+import styles from "../../style/ranking.module.css";
 
 const getAvatarColor = (str) => {
   if (!str) return "#ccc";
