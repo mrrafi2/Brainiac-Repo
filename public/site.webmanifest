@@ -1,14 +1,15 @@
 {
-  "name": "Brainiac",
+  "name": "Brainiac — Your Go-To Blogging Platform",
   "short_name": "Brainiac",
-  "description": "Brainiac — Your go-to blogging platform, crafted by Rafi.",
-  "start_url": "/",
+  "description": "Brainiac is a clean, minimal, and powerful blogging platform built for creators and writers who value speed, simplicity, and style.",
+  "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "fullscreen"],
   "orientation": "portrait",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -21,6 +22,23 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
     }
-  ]
+  ],
+  "related_applications": [],
+  "lang": "en"
 }

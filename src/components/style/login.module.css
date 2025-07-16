@@ -1,0 +1,493 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--muted)) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 70% 20%, hsl(var(--accent) / 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 30% 80%, hsl(var(--primary) / 0.1) 0%, transparent 50%);
+  animation: floatReverse 25s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.container::after {
+  content: '📝';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  font-size: 3rem;
+  opacity: 0.05;
+  animation: wiggle 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.row {
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  z-index: 2;
+}
+
+.cardContainer {
+  position: relative;
+  perspective: 1200px;
+}
+
+.card {
+  background: hsl(var(--card) / 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid hsl(var(--border) / 0.3);
+  border-radius: 28px;
+  box-shadow: 
+    0 25px 50px hsl(var(--foreground) / 0.12),
+    0 12px 24px hsl(var(--foreground) / 0.08),
+    inset 0 1px 0 hsl(var(--background) / 0.2);
+  transform: rotateX(-2deg) rotateY(2deg);
+  transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: rotateX(0deg) rotateY(0deg) translateY(-12px);
+  box-shadow: 
+    0 40px 80px hsl(var(--foreground) / 0.2),
+    0 20px 40px hsl(var(--foreground) / 0.15);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    hsl(var(--primary)), 
+    hsl(var(--accent)), 
+    hsl(var(--primary)));
+  border-radius: 28px 28px 0 0;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+.card::after {
+  content: '🖋️';
+  position: absolute;
+  bottom: -15px;
+  left: -15px;
+  font-size: 2.5rem;
+  opacity: 0.08;
+  animation: bounce 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.cardHeader {
+  background: linear-gradient(135deg, 
+    hsl(var(--primary)), 
+    hsl(var(--primary) / 0.9),
+    hsl(var(--accent) / 0.8));
+  color: hsl(var(--primary-foreground));
+  text-align: center;
+  padding: 2.5rem 2rem;
+  margin: -1px -1px 0 -1px;
+  border-radius: 28px 28px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.cardHeader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    hsl(var(--primary-foreground) / 0.15), 
+    transparent);
+  animation: shine 4s ease-in-out infinite;
+}
+
+.cardHeader::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 1.5rem;
+  width: 40px;
+  height: 40px;
+  background: hsl(var(--primary-foreground) / 0.1);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  animation: orbit 8s linear infinite;
+}
+
+.cardHeader h3 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 4px hsl(var(--primary) / 0.3);
+}
+
+.cardBody {
+  padding: 3rem 2.5rem 2.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.inputGroup {
+  position: relative;
+}
+
+.formInput {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  background: hsl(var(--background) / 0.6);
+  border: 2px solid hsl(var(--border));
+  border-radius: 18px;
+  font-size: 1.05rem;
+  color: hsl(var(--foreground));
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  position: relative;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: hsl(var(--primary));
+  background: hsl(var(--background) / 0.9);
+  box-shadow: 
+    0 0 0 4px hsl(var(--primary) / 0.12),
+    0 8px 24px hsl(var(--primary) / 0.2);
+  transform: translateY(-3px);
+}
+
+.formInput::placeholder {
+  color: hsl(var(--muted-foreground));
+  transition: all 0.3s ease;
+}
+
+.formInput:focus::placeholder {
+  opacity: 0.6;
+  transform: translateX(4px);
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.passwordToggle:hover {
+  color: hsl(var(--primary));
+  background: hsl(var(--muted) / 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.button {
+  flex: 1;
+  padding: 1.25rem 2rem;
+  border: none;
+  border-radius: 18px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    hsl(var(--background) / 0.2), 
+    transparent);
+  transition: left 0.5s ease;
+}
+
+.button:hover::before {
+  left: 100%;
+}
+
+.buttonPrimary {
+  background: linear-gradient(135deg, 
+    hsl(var(--primary)), 
+    hsl(var(--primary) / 0.8),
+    hsl(var(--accent) / 0.9));
+  color: hsl(var(--primary-foreground));
+  box-shadow: 0 6px 20px hsl(var(--primary) / 0.4);
+}
+
+.buttonPrimary:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px hsl(var(--primary) / 0.5);
+}
+
+.buttonPrimary:active {
+  transform: translateY(-1px);
+}
+
+.buttonSecondary {
+  background: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+  border: 2px solid hsl(var(--border));
+  box-shadow: 0 4px 12px hsl(var(--foreground) / 0.1);
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  background: hsl(var(--secondary) / 0.8);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px hsl(var(--foreground) / 0.15);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.button:disabled::before {
+  display: none;
+}
+
+.errorMessage {
+  background: linear-gradient(135deg, 
+    hsl(var(--destructive) / 0.12), 
+    hsl(var(--destructive) / 0.08));
+  border: 1px solid hsl(var(--destructive) / 0.3);
+  color: hsl(var(--destructive));
+  padding: 1.25rem;
+  border-radius: 16px;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  animation: slideInBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: relative;
+}
+
+.errorMessage::before {
+  content: '⚠️';
+  margin-right: 0.5rem;
+}
+
+.footerText {
+  text-align: center;
+  margin-top: 2.5rem;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.footerText a {
+  color: hsl(var(--primary));
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.footerText a::before {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)));
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+}
+
+.footerText a:hover {
+  color: hsl(var(--accent));
+  transform: translateY(-2px);
+}
+
+.footerText a:hover::before {
+  width: 100%;
+}
+
+/* Animations */
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(20px) rotate(-180deg); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  75% { transform: rotate(-5deg); }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  50% { left: -50%; }
+  100% { left: 100%; }
+}
+
+@keyframes orbit {
+  0% { transform: translateY(-50%) rotate(0deg) translateX(20px) rotate(0deg); }
+  100% { transform: translateY(-50%) rotate(360deg) translateX(20px) rotate(-360deg); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes slideInBounce {
+  0% { 
+    opacity: 0; 
+    transform: translateY(-20px) scale(0.9); 
+  }
+  50% {
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .card {
+    transform: none;
+    border-radius: 24px;
+  }
+  
+  .card:hover {
+    transform: translateY(-6px);
+  }
+  
+  .cardHeader {
+    padding: 2rem 1.5rem;
+    border-radius: 24px 24px 0 0;
+  }
+  
+  .cardBody {
+    padding: 2rem 1.5rem;
+  }
+  
+  .buttonGroup {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .cardHeader h3 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardHeader h3 {
+    font-size: 1.5rem;
+  }
+  
+  .formInput {
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+  }
+  
+  .button {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .container::after {
+    font-size: 2rem;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card {
+    border: 3px solid hsl(var(--foreground));
+  }
+  
+  .formInput {
+    border-width: 3px;
+  }
+  
+  .button {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .formInput,
+  .button,
+  .footerText a,
+  .passwordToggle {
+    transition: none;
+  }
+  
+  .container::before,
+  .container::after,
+  .cardHeader::before,
+  .cardHeader::after,
+  .card::after {
+    animation: none;
+  }
+  
+  .card::before {
+    animation: none;
+    background: hsl(var(--primary));
+  }
+}
