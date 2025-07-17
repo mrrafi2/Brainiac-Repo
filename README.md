@@ -20,16 +20,6 @@ Brainiac Blogsite is a modern, futuristic, and advanced blogging platform built 
 
 ---
 
-### 🎥 Screenshots & GIFs
-
-<br>
-| Home Page                | Write Blog Editor            | Blog Details              |
-| ------------------------ | ---------------------------- | ------------------------- |
-| ![](./screenshots/home.gif) | ![](./screenshots/write-blog.png) | ![](./screenshots/blog-details.png) |
-
-*Click to enlarge.*
-
----
 
 ## ✅ Installation & Quick Start
 
@@ -38,7 +28,7 @@ Follow these steps to run Brainiac locally in under 5 minutes.
 1. **Clone the repo**
 
    ```bash
-   git clone git@github.com
+   git clone git@github.com:mrrafi2/Brainiac-Repo.git
    cd brainiac
    ```
 2. **Install dependencies**
@@ -84,7 +74,7 @@ Brainiac is designed to be intuitive, fast, and scalable. Here’s how you (and 
   * Email verification and password reset built-in.
 * **Rich Blog Editor**
 
-  * WYSIWYG + Markdown support: switch between visual and raw modes.
+  * WYSIWYG: switch between visual and raw modes.
   * Live preview to catch formatting issues early.
   * Category tags for organization.
 * **Simple My Blogs Dashboard**
@@ -116,24 +106,67 @@ Dive deep into how Brainiac is organized under the hood.
 
 ```bash
 brainiac/
-├─ .env.local             # Local env variables (ignored by Git)
-├─ public/                # Static assets (favicons, manifest)
+├─ .env.local                   # Local env variables (ignored by Git)
+├─ public/                      # Static assets (favicons, manifest)      
 ├─ src/
-│  ├─ components/         # Reusable UI components (atoms, molecules)
-│  │   ├─ Auth/           # Login, Signup, Account pages
-│  │   ├─ Blogs/          # BlogCard, BlogGrid, PopularPosts
-│  │   ├─ UX/             # SearchBar, Bookmark, History, Like
-│  │   └─ Layout/         # Header, Layout, ScrollToTop
-│  ├─ pages/              # Route-backed pages (Home, BlogDetails, WriteBlog)
-│  ├─ firebases/           # Integrations (Firebase config, EmailJS, Turndown)
-│  ├─ context/            # AuthContext & global state providers
-│  ├─ index.css           # Global styles & Tailwind imports
-│  └─ main.jsx            # App initialization & Router setup
-├─ README.md              # Project overview & docs
-├─ vite.config.js         # Vite bundler settings
-├─ tailwind.config.cjs    # Tailwind customization
-├─ postcss.config.cjs     # PostCSS plugins for Tailwind
-└─ package.json           # Project metadata & dependencies
+│   ├─ components/              # Reusable UI bits
+│   │   ├─ Auth/                # Auth flows & account setup
+│   │   │   ├─ account.jsx
+│   │   │   ├─ login.jsx
+│   │   │   └─ singup.jsx
+│   │   ├─ blogs/               # Blog listing & cards
+│   │   │   ├─ blogCard.jsx
+│   │   │   ├─ blogGrid.jsx
+│   │   │   └─ category.jsx
+│   │   ├─ contexts/            # React Context providers
+│   │   │   └─ AuthContext.jsx
+│   │   ├─ firebases/           # Firebase config
+│   │   │   └─ firebase.js
+│   │   ├─ images/              # Local image assets
+│   │   ├─ navs/                # Navigation components
+│   │   │   ├─ logo.jsx
+│   │   │   ├─ menu.jsx
+│   │   │   └─ navbar.jsx
+│   │   ├─ pages/               # Route-backed pages
+│   │   │   ├─ blogRelated/     # All blog-detail pages
+│   │   │   │   ├─ BlogDetails.jsx
+│   │   │   │   ├─ blogerDetail.jsx
+│   │   │   │   ├─ categoyPage.jsx
+│   │   │   │   ├─ myBlogs.jsx
+│   │   │   │   ├─ popularPosts.jsx
+│   │   │   │   └─ writeBlog.jsx
+│   │   │   ├─ ExtraFeatures/   # Extra feature
+│   │   │   │   ├─ ranking.jsx
+│   │   │   │   └─ tranding.jsx
+│   │   │   ├─ about.jsx
+│   │   │   ├─ contact.jsx
+│   │   │   ├─ home.jsx
+│   │   │   ├─ privacy.jsx
+│   │   │   └─ termCond.jsx
+│   │   ├─ style/               # CSS modules or globals
+│   │   └─ uxFeatures/          # Search, bookmarks, likes, history
+│   │       ├─ bookmark.jsx
+│   │       ├─ help.jsx
+│   │       ├─ history.jsx
+│   │       ├─ likedPost.jsx
+│   │       ├─ searchbar.jsx
+│   │       └─ userBlog.jsx
+│   ├─ App.jsx                  # Route definitions & context wraps
+│   ├─ App.css                  # Component-level styles
+│   ├─ private.jsx              # ProtectedRoute wrapper
+│   ├─ scrollToTop.jsx          # Scroll on route change
+│   ├─ layout/                  # Page layout & header
+│   │   ├─ header.jsx
+│   │   └─ layout.jsx
+│   ├─ index.css                # Tailwind imports & global overrides
+│   └─ main.jsx                 # App init & React-Router setup
+├─ index.html
+├─ package.json
+├─ pnpm-lock.yaml
+├─ postcss.config.cjs
+├─ README.md                    # Project overview & this doc
+├─ tailwind.config.cjs
+└─ vite.config.js
 ```
 
 ### Routing Logic
