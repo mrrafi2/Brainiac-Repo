@@ -408,7 +408,6 @@ emailjs.sendForm(
 * **Branch Strategy:** `main` (stable), `dev` (active development)
 * **Commit Convention:** Use Conventional Commits (e.g., `feat:`, `fix:`).
 * **Pull Requests:** Link an issue, include screenshots, add tests.
-* **Code of Conduct:** Please read [CODE\_OF\_CONDUCT.md](./CODE_OF_CONDUCT.md).
 
 ---
 
