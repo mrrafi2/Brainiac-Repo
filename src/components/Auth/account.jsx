@@ -47,7 +47,7 @@ export default function Account() {
     <div className="float-end" style={{ width: "150px", position: "relative" }}>
       {currentUser ? (
         <>
-          {/* USER AVATAR */}
+          {/* avatar */}
           <div
             className="rounded-circle d-flex align-items-center justify-content-center float-end"
             style={{
@@ -71,7 +71,7 @@ export default function Account() {
               : "??"}
           </div>
 
-          {/* ACCOUNT OVERLAY */}
+          {/* account overlay */}
           {showOverlay &&
             ReactDOM.createPortal(
               <div
@@ -209,7 +209,6 @@ export default function Account() {
         </div>
       </div>
 
-      {/* 🔥 Add CSS Animations */}
       <style>
         {`
           @keyframes fadeIn {
@@ -229,7 +228,6 @@ export default function Account() {
         </>
       ) : (
         <>
-          {/* DEFAULT USER ICON + SIGNUP & LOGIN LINKS */}
           <i
             className="fa-solid fa-user ms-3 mn-0 mt-0 rounded-circle"
             style={{
@@ -268,7 +266,7 @@ export default function Account() {
         </>
       )}
          
-         {/* FUTURISTIC ACCOUNT OVERLAY STYLES */}
+         {/* inline account ovelay style only for now */}
       <style>{`
         /* Account Overlay Container */
         .account-overlay {
