@@ -1,3 +1,8 @@
+// a trusty guide to page sections, with a secret side menu for explorers
+// TIP: debounce onValue fetch if you expect rapid blog updates
+
+// TODO: extract bloggerAccounts logic into custom hook (useBloggerStats)
+
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getDatabase, ref, get, onValue } from "firebase/database";
@@ -5,31 +10,36 @@ import { useAuth } from "../contexts/AuthContext";
 import ReactDOM from "react-dom";
 
 export default function Nav() {
+
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentUser } = useAuth(); // For checking logged-in user's UID
+  const { currentUser } = useAuth(); // for checking logged-in user's UID
   const [activeTab, setActiveTab] = useState(location.pathname);
   const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
 
-  // (Optional) State for blogger accounts if used elsewhere.
+  // (Optional) state for blogger accounts if used elsewhere.
   const [bloggerAccounts, setBloggerAccounts] = useState([]);
 
-  useEffect(() => {
+    // sync activeTab on navigation
+  useEffect(( ) => {
     setActiveTab(location.pathname);
-  }, [location.pathname]);
+  }, [location.pathname] );
 
-  useEffect(() => {
-    const db = getDatabase();
+    // fetch and aggregate blogger stats
+  useEffect(( ) => {
+    const db= getDatabase();
     const blogsRef = ref(db, "blogs");
 
-    const fetchData = () => {
+    const fetchData= ( ) => {
+         // TIP: cache previous result to skip setState if data unchanged
       get(blogsRef)
         .then((snapshot) => {
           if (snapshot.exists()) {
             const blogsData = snapshot.val();
             const accountsMap = {};
 
-            Object.values(blogsData).forEach((blog) => {
+              // build map of authorUID or name
+             Object.values(blogsData).forEach((blog) => {
               const uid = blog.authorUID;
               const name = blog.author || "Anonymous";
               const avatar = blog.authorAvatar || null;
@@ -54,8 +64,8 @@ export default function Nav() {
                   avatar,
                 };
               }
-            });
-
+            } );
+          // include currentUser even if no posts
             if (currentUser) {
               const { uid, displayName } = currentUser;
               if (accountsMap[uid]) {
@@ -70,16 +80,19 @@ export default function Nav() {
               }
             }
 
-            const accountsArray = Object.values(accountsMap).sort(
+          // TODO: limit top N authors or paginate
+            const arr = Object.values(accountsMap).sort(
               (a, b) => b.count - a.count
             );
-            setBloggerAccounts(accountsArray);
+            setBloggerAccounts(arr);
           }
         })
         .catch((error) => {
           console.error("Error fetching blogs:", error);
         });
     };
+
+    //initial load
 
     fetchData();
 
@@ -266,7 +279,8 @@ export default function Nav() {
 }
 
 
-      {/* Styles */}
+    {/* demo styles: move to CSS module */}
+
       <style>
         {`
           .navbar {

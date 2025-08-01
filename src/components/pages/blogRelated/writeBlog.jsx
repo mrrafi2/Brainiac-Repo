@@ -1,3 +1,5 @@
+// lets authors write rich-text blogs with grammar suggestions, image uploads, and markdown conversion
+//todo:  split this huge component into <TitleInput />, <CoverDropzone />, <Editor /> for clarity
 
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import ReactQuill from "react-quill";
@@ -10,7 +12,7 @@ import { useDropzone } from "react-dropzone";
 import TurndownService from 'turndown';
 import { gfm } from 'turndown-plugin-gfm';
 
-
+//  suggestionBlot registers grammar suggestions as highlighted span-
 const Inline = Quill.import("blots/inline");
 class SuggestionBlot extends Inline {
   static create(value) {
@@ -28,12 +30,17 @@ SuggestionBlot.blotName = "suggestion";
 SuggestionBlot.tagName = "span";
 Quill.register(SuggestionBlot);
 
+// turndown service for html to markdown conversion--
 const turndownService = new TurndownService({
   headingStyle: 'atx',      
   codeBlockStyle: 'fenced', 
-});
+}
+);
+turndownService.use(gfm);   // support gitHub flavored markdown
 
-export default function Write() {
+
+export default function Write( ) {
+
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const quillRef = useRef(null);
@@ -49,7 +56,7 @@ export default function Write() {
   const [coverPreview, setCoverPreview] = useState("");
   const [debouncedContent, setDebouncedContent] = useState("");
   
-
+  // static category list (could fetch from db later)
   const categories = [
     "Business", "Arts", "Technology", "Science", "Geopolitics",
     "Sports", "Health", "History", "Geography", "Education",
@@ -58,6 +65,7 @@ export default function Write() {
     "Wellness", "Mindset", "Innovation"
   ];
 
+    // toolbar config memo to avoid re-renders
   const modules = useMemo(() => ({
     toolbar: [
       [{ header: [1, 2, 3, false] }],
@@ -68,27 +76,32 @@ export default function Write() {
       ["clean"],
     ],
   }), []);
+
   const formats = useMemo(() => [
     "header", "bold", "italic", "underline", "strike",
     "blockquote", "code-block", "list", "bullet",
     "link", "image", "video", "suggestion"
   ], []);
 
+  // cover img dropzone
   const onDrop = files => {
     const file = files[0];
     setCoverFile(file);
-    setCoverPreview(URL.createObjectURL(file));
+    setCoverPreview ( URL.createObjectURL(file) )  // preview soon
   };
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone ({
     onDrop,
     accept: { 'image/*': [] }
-  });
+  }
+);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedContent(content), 1000);
     return () => clearTimeout(timer);
-  }, [content]);
+  }, [content] );
 
+   // fetch grammar suggestions logics
   useEffect(() => {
     const plain = debouncedContent.replace(/<[^>]+>/g, " ").trim();
     if (!plain) return;
@@ -100,7 +113,7 @@ export default function Write() {
       .then(res => res.json())
       .then(data => applySuggestions(quillRef.current.getEditor(), data.matches || []))
       .catch(console.error);
-  }, [debouncedContent]);
+  }, [debouncedContent] );
 
   const applySuggestions = (editor, matches) => {
     matches.forEach(m => {
@@ -110,6 +123,7 @@ export default function Write() {
     });
   };
 
+    // Tab  key to accept a suggestion under cursor
   useEffect(() => {
     const editor = quillRef.current?.getEditor();
     const onKeyDown = e => {
@@ -127,9 +141,10 @@ export default function Write() {
       }
     };
     editor?.root.addEventListener('keydown', onKeyDown);
-    return () => editor?.root.removeEventListener('keydown', onKeyDown);
-  }, []);
+    return ( ) => editor?.root.removeEventListener('keydown', onKeyDown);
+  }, [] );
 
+    // tag input: enter or comma to add tag
   const handleTagKey = e => {
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault();
@@ -140,7 +155,8 @@ export default function Write() {
   };
   const removeTag = idx => setTags(tags.filter((_, i) => i !== idx));
 
-  const uploadCover = async () => {
+  // cover img upload to cloudinary 
+  const uploadCover = async ( ) => {
   if (!coverFile) return "";
 
   const data = new FormData();
@@ -172,6 +188,7 @@ const turndownService = new TurndownService({
 
 turndownService.use(gfm);
 
+  // submit - upload cover, convert to markdown, push to db
   const handleUpload = async e => {
     e.preventDefault();
     if (!currentUser) return alert('You must be logged in.');
@@ -412,7 +429,10 @@ turndownService.use(gfm);
         )}
       </div>
 
-      <style>{`
+
+ {/* move the inline styels to seperate module css file */}
+      <style> 
+        {`
         .modern-write-container {
           min-height: 100vh;
         background: linear-gradient(145deg, #2C3E50 0%, #4CA1AF 100%);

@@ -1,3 +1,5 @@
+// the auth party host: signs up, logs in/out, and keeps the user state in check
+
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -17,25 +19,28 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [loading, setLoading] = useState(true);
+
+  const [loading, setLoading] = useState(true);  // auth in progress
   const [currentUser, setCurrentUser] = useState();
 
-  useEffect(() => {
-    const auth = getAuth();
+  // listen for login/logout events
+  useEffect(( ) => {
+   const auth= getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
-    });
-
+    }
+  );
     return unsubscribe;
-  }, []);
+  }, [ ]);
 
 
+    //  register new user and write to db AKA signup
   async function signup(email, password, username) {
     const auth = getAuth();
     await createUserWithEmailAndPassword(auth, email, password);
 
-    // Update profile with the username
+    // update profile with the username
     await updateProfile(auth.currentUser, {
       displayName: username,
     });
@@ -43,7 +48,7 @@ export function AuthProvider({ children }) {
     const user = auth.currentUser;
     setCurrentUser({ ...user });
 
-    // Write user data to Realtime Database under "users/{uid}"
+    // write user data to Realtime Database under "users/{uid}"
     const db = getDatabase();
     set(ref(db, `users/${user.uid}`), {
       displayName: username,
@@ -57,6 +62,8 @@ export function AuthProvider({ children }) {
     const auth = getAuth();
     return signInWithEmailAndPassword(auth, email, password);
   }
+  
+// TODO: add Google/Facebook login here to spice things up
 
   // Logout function
   function logout() {
@@ -64,6 +71,7 @@ export function AuthProvider({ children }) {
     return signOut(auth);
   }
 
+   // can rename yourself
   async function updateDisplayName(newDisplayName) {
     const auth = getAuth();
     if (auth.currentUser) {
@@ -87,9 +95,11 @@ export function AuthProvider({ children }) {
     updateDisplayName,
   };
 
+
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {/* don't show children until auth is ready */}
+      { !loading && children }
     </AuthContext.Provider>
   );
 }

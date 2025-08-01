@@ -1,3 +1,5 @@
+// this is the Blog card that giggles when you hover and counts every curious eyeball , handle with playfulness
+//styled with inline css  for demo excperiment
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,13 +16,18 @@ export default function Blog({ blog }) {
   const [seenCount, setSeenCount] = useState(blog.seen || 0);
   const [isHovered, setIsHovered] = useState(false);
 
+    // sync seen count when blog prop updates
   useEffect(() => {
     setSeenCount(blog.seen || 0);
   }, [blog.seen]);
 
-  const handleClick = async () => {
-    if (currentUser && blog.author !== currentUser.displayName) {
-      const blogRef = ref(database, `blogs/${blog.id}`);
+
+  // bump view counter in db, skip if author or no user
+  const handleClick = async ( ) => {
+
+       // TIP: skip transaction if same user to save writes
+    if ( currentUser && blog.author !== currentUser.displayName ) {
+      const blogRef= ref (database, `blogs/${blog.id}`);
       try {
         await runTransaction(blogRef, (currentData) => {
           if (currentData) {
@@ -29,9 +36,10 @@ export default function Blog({ blog }) {
             return { ...currentData, seen: updatedSeen };
           }
           return currentData;
-        });
+        }
+      );
       } catch (error) {
-        console.error("Error updating seen count:", error);
+        console.error("Error updating seen count:", error);  // TODO: show toast to user
       }
     }
     navigate(`/blog/${blog.id}`);
@@ -43,12 +51,14 @@ export default function Blog({ blog }) {
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      tabIndex={ 0 }   // TIP: make card focusable for keyboard users
+
     >
-      {/* Animated Background Overlay */}
+      {/* background overlay */}
       <div className="blog-overlay"></div>
       
-      {/* Cover Image Section */}
-      {blog.coverImage && (
+      {/* cover img section */}
+      { blog.coverImage && (
         <div className="blog-image-container">
           <img 
             src={blog.coverImage} 
@@ -64,7 +74,7 @@ export default function Blog({ blog }) {
           {blog.category}
         </span>
 
-        {/* Title */}
+        {/* the title */}
         <h4 className="blog-title">
           {blog.title}
         </h4>
@@ -92,13 +102,14 @@ export default function Blog({ blog }) {
           </div>
         </div>
 
-        {/* Read More Indicator */}
+        {/* call to action */}
         <div className="read-more-indicator">
           <span>Read More</span>
           <i > <ArrowRight size={15}/></i>
         </div>
       </div>
 
+      {/* inline styles for demo; move to CSS module later */}
       <style >{`
         .blog-card-compact {
           position: relative;

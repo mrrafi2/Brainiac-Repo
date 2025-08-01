@@ -1,3 +1,6 @@
+//  manage and showcase the user's own blog posts
+// todo- transfar the inline css to module css
+
 import { useState, useEffect } from "react";
 import { ref, onValue, remove } from "firebase/database";
 import { database } from "../../firebases/firebase";
@@ -22,6 +25,7 @@ export default function MyBlogs() {
       if (data) {
         const posts = Object.entries(data).map(([id, value]) => ({ id, ...value }));
       const userPosts = posts.filter(p => p.authorUID === currentUser.uid);
+        // TODO: memoize sorting to avoid re-sorting on each update
         userPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
         setMyBlogs(userPosts);
       } else {
@@ -33,6 +37,7 @@ export default function MyBlogs() {
     return () => unsubscribe && unsubscribe();
   }, [currentUser]);
 
+    // handler for deleting a post with confirmation
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to permanently delete this blog?")) {
       remove(ref(database, `blogs/${id}`));

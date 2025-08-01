@@ -1,3 +1,5 @@
+//build for fixing the rect router problem
+
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 

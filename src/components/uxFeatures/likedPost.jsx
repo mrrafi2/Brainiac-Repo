@@ -1,3 +1,5 @@
+//shows all the blogs user given a thumbs-up  
+
 import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -9,7 +11,7 @@ export default function Liked() {
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
-  // Track current user using onAuthStateChanged
+  // track current user 
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -24,7 +26,8 @@ export default function Liked() {
     return () => unsubscribe();
   }, []);
 
-  // Fetch all blogs and filter those liked by the current user
+
+  // load and filter liked blogs
   useEffect(() => {
     if (!currentUser) return;
     const db = getDatabase();
@@ -37,11 +40,12 @@ export default function Liked() {
           const allBlogs = Object.entries(data).map(([id, blog]) => ({
             id,
             ...blog,
-          }));
+          } )
+        );
           const filtered = allBlogs.filter(
             (blog) => blog.likedBy && blog.likedBy.includes(currentUser.uid)
           );
-          filtered.sort((a, b) => b.likes - a.likes);
+          filtered.sort((a, b) => b.likes - a.likes);  // most liked first
           setLikedBlogs(filtered);
         } else {
           setLikedBlogs([]);

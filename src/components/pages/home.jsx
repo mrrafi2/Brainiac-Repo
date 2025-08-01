@@ -1,14 +1,15 @@
+//the home page
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Blogs from "../blogs/blogGrid";
 import Category from "../blogs/category";
 import FollowUs from "../follow";
 import Popular from "./blogRelated/popularPosts";
-import Recent from "../uxFeatures/userBlog";
 import SearchBar from "../uxFeatures/searchbar";
 import ReactDOM from "react-dom";
 import { PenLine } from "lucide-react";
 import styles from "../style/home.module.css";
+import UsersBlog from "../uxFeatures/userBlog";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -115,7 +116,7 @@ export default function Home() {
                 <Popular />
               </div>
               <hr className={styles.sectionDivider} />
-              <Recent />
+              <UsersBlog/>
               <hr className={styles.sectionDivider} />
               <div id="categories" className={styles.scrollAnchor}>
                 <Category />

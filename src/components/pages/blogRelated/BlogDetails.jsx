@@ -1,3 +1,6 @@
+//full feature blog show show: likes, comments, bookmarks, dark mode, share menu, and related posts
+ //todo: break in multiple components like <Content />, <Comments />, <RelatedPosts /> for better clarity mangement 
+ 
  import { useParams, Link,useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styles from "../../style/BlogDetails.module.css";
@@ -5,7 +8,7 @@ import { database } from "../../firebases/firebase";
 import {getDatabase, ref, onValue, update, set, push, serverTimestamp,remove } from "firebase/database";
 import { getAuth,onAuthStateChanged } from "firebase/auth";
 import {useAuth} from "../../contexts/AuthContext";
-import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.snow.css";  // note: quill CSS loaded globally
 import { useMemo } from "react";
 import {
   ArrowLeft,
@@ -24,7 +27,8 @@ import rehypeHighlight from "rehype-highlight";
 
 
 
-export default function BlogDetails() {
+export default function BlogDetails( ) {
+
   const { id } = useParams();
   const auth = getAuth();
   const user = auth.currentUser;
@@ -46,16 +50,19 @@ export default function BlogDetails() {
 
   const navigate = useNavigate ()
 
-
+// APPLY DARK MODE CLASS
   useEffect(() => {
     document.body.classList.toggle("darkMode", darkMode);
-  }, [darkMode]);
+  }, [darkMode] );
 
-  useEffect(() => {
+  // fetch blog data +comments + history
+  useEffect(( ) => {
     if (!userId) return;
+
     const blogRef = ref(database, `blogs/${id}`);
     onValue(blogRef, (snapshot) => {
-      const data = snapshot.val();
+      const data = snapshot.val()
+
       if (data) {
         setBlog(data);
         setComments(Array.isArray(data.comments) ? data.comments : []);
@@ -64,11 +71,11 @@ export default function BlogDetails() {
         saveToHistory(data); 
 
       }
-    });
+    } );
   }, [id, userId]);
 
 
-  useEffect(() => {
+  useEffect(( ) => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -76,9 +83,9 @@ export default function BlogDetails() {
     return () => unsubscribe();
   }, []); 
 
-
+// RECORD HISTORY ENTRY
   const saveToHistory = (blogData) => {
-    if (!userId || !blogData) return;
+    if (!userId || !blogData) return;  // skip if guest
     const historyRef = ref(database, `history/${userId}`);
     
     const newHistoryEntry = {
@@ -92,6 +99,7 @@ export default function BlogDetails() {
     set(push(historyRef), newHistoryEntry);
   };
 
+  // RELATED POSTS TOP 3
   const fetchRelatedPosts = (category) => {
     if (!category) return;
     const blogsRef = ref(database, "blogs");
@@ -108,6 +116,7 @@ export default function BlogDetails() {
     });
   };
 
+  //the like 
   const handleLike = () => {
     if (!userId) return alert("Please log in to like.");
     let updatedLikes = blog.likes || 0;
@@ -125,6 +134,7 @@ export default function BlogDetails() {
     setLiked(!liked);
   };
 
+    // the  comment CRUD
   const handleCommentSubmit = (e) => {
     e.preventDefault();
     if (!userId) return alert("Please log in to comment.");
@@ -225,6 +235,7 @@ export default function BlogDetails() {
     );
   }, [currentUser, id]);
   
+  // the bookmark logics
   const handleToggleBookmark = async () => {
     if (!currentUser) return alert("Please log in to bookmark.");
     if (!blog) return alert("Blog data not loaded yet.");

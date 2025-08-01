@@ -1,3 +1,5 @@
+//  this is the BlogGrid that arranges  all the giggling Blog cards in responsive look into a merry carousel of content via modern pagination
+
 import Blog from "./blogCard";
 import { useEffect, useState } from "react";
 import { database } from "../firebases/firebase"; 
@@ -5,36 +7,42 @@ import { ref, onValue } from "firebase/database";
 import {  ChevronLeft, ChevronRight  } from 'lucide-react';
 
 
-export default function Blogs() {
-  const [blogs, setBlogs] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1); 
-  const [loading, setLoading] = useState(true);
-  const blogsPerPage = 12;
+export default function Blogs( ) {
+  const [blogs, setBlogs]= useState([]);
 
- 
-  useEffect(() => {
+  const [currentPage, setCurrentPage]= useState(1);
+  const [totalPages, setTotalPages] =  useState(1); 
+  const [loading, setLoading] = useState(true);
+
+  const blogsPerPage = 12;  // TIP: make configurable via props
+
+
+   // fetch and reverse blogs list once on mount
+  useEffect( ( ) => {
     const blogsRef = ref(database, "blogs");
     const unsubscribe = onValue(blogsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
         const blogList = Object.keys(data).map((key) => ({ id: key, ...data[key] }));
-        const reversedBlogs = blogList.reverse();
-        setBlogs(reversedBlogs);
+        const reversedBlogs =  blogList.reverse ( );  // newest first
+        setBlogs( reversedBlogs );
         setTotalPages(Math.ceil(reversedBlogs.length / blogsPerPage));
       }
       setLoading(false);
     });
     return () => unsubscribe();
-  }, []);
+  }, [ ]
+);
 
-  // ... keep existing code (pagination logic)
+// pagination logic
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
   const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
 
+    // generate pages array (simple or trunc)
   const generatePageNumbers = () => {
-    let pages = [];
+    let pages= [ ];
+        // TODO: handle middle ellipsis for pages > 7
     if (totalPages <= 7) {
       pages = [...Array(totalPages).keys()].map((n) => n + 1);
     } else {
@@ -45,7 +53,7 @@ export default function Blogs() {
 
   return (
     <div className="blogs-container">
-      {/* Modern Pagination Header */}
+      {/*  Pagination header */}
       <div className="pagination-header">
         <div className="pagination-stats">
           <span className="stats-text">
@@ -58,7 +66,7 @@ export default function Blogs() {
             <button
               className={`nav-btn prev-btn ${currentPage === 1 ? 'disabled' : ''}`}
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
+              disabled={currentPage === 1}  // accessibility 
             >
                  <i> <ChevronLeft/> </i>
             </button>
@@ -87,7 +95,7 @@ export default function Blogs() {
         </nav>
       </div>
 
-      {/* Loading State */}
+       {/* loader fallback */}
       {loading && (
         <div className="loading-state">
           <div className="loading-animation">
@@ -109,7 +117,7 @@ export default function Blogs() {
         ))}
       </div>
 
-      {/* Bottom Pagination */}
+        {/* footer pagination for longer lists */}
       {!loading && blogs.length > blogsPerPage && (
         <div className="pagination-footer">
           <nav className="modern-pagination">
@@ -140,6 +148,7 @@ export default function Blogs() {
         </div>
       )}
 
+      {/*TODO: move inline styles into CSS modules */}
       <style >{`
         /* Main Container */
         .blogs-container {

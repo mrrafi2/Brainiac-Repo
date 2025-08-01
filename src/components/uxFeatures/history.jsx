@@ -1,3 +1,6 @@
+//  shows what user already peeked at 
+// Todo: pull grouping logic into a custom hook for clarity
+
 import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -5,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 import styles from "../style/history.module.css";
 
 export default function History() {
+
   const [historyItems, setHistoryItems] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true); 
 
   const navigate = useNavigate();
 
+   // watch for login/logout
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -23,15 +28,20 @@ export default function History() {
       } else {
         setCurrentUser(user);
       }
-    });
+    }
+  );
     return () => unsubscribe();
-  }, []);
+  }, [ ] 
+);
 
+// load history 
   useEffect(() => {
     if (!currentUser) return;
+
     const db = getDatabase();
-    // Adjusted path per our updated rules
+    // adjusted path per our updated rules
     const historyRef = ref(db, `history/${currentUser.uid}`);
+    
     const unsubscribe = onValue(
       historyRef,
       (snapshot) => {
@@ -40,8 +50,9 @@ export default function History() {
           const items = Object.entries(data).map(([id, record]) => ({
             id,
             ...record,
-          }));
-          // Sort by timestamp descending (newest first)
+          } )
+        );
+          // sort by timestamp descending (newest first)
           items.sort((a, b) => b.timestamp - a.timestamp);
           setHistoryItems(items);
         } else {
@@ -56,16 +67,21 @@ export default function History() {
       }
     );
     return () => unsubscribe();
-  }, [currentUser]);
+  }, [currentUser]
+);
 
+// group by date
   let groupedHistory = historyItems.reduce((acc, item) => {
     const dateKey = new Date(item.timestamp).toLocaleDateString();
+
     if (!acc[dateKey]) acc[dateKey] = [];
     acc[dateKey].push(item);
-    return acc;
-  }, {});
 
-  Object.keys(groupedHistory).forEach((dateKey) => {
+    return acc;
+  }, { } 
+);
+
+  Object.keys (groupedHistory).forEach((dateKey) => {
     const group = groupedHistory[dateKey];
     const uniqueByBlog = group.reduce((acc, item) => {
       const blogId = item.blogId;

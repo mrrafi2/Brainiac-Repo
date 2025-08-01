@@ -1,18 +1,22 @@
+// shows users auth state user avatar, account menu, and logout modal
+
 import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import ReactDOM from "react-dom";
 import { FileText, Heart, Bookmark } from "lucide-react";
 
+// TODO: extract overlay and modal into custom hooks or separate components
 
-export default function Account() {
+export default function Account( ) {
   const { currentUser, logout } = useAuth();
   const [showOverlay, setShowOverlay] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const overlayRef = useRef(null);
 
+    // simple hash-to-color for avatar
   const getColorFromString = (str) => {
-    let hash = 0;
+    let hash = 0; /* nothing fancy, just bit twiddling */
     for (let i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
@@ -20,6 +24,8 @@ export default function Account() {
   };
 
   const bgColor = currentUser ? getColorFromString(currentUser.uid) : "#ccc";
+
+  // TIP: memoize getColorFromString to avoid recalculations on each render
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -33,7 +39,8 @@ export default function Account() {
     };
   }, []);
 
-  const confirmLogout = () => {
+ // ask before nuking session
+  const confirmLogout = ( ) => {
     setShowLogoutConfirm(true);
   };
 

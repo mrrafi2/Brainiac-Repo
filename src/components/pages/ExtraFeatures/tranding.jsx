@@ -1,11 +1,15 @@
+//  where the coolest blogs get their moment in the sun (or shade, if you're into dark mode)
+// NOTE: this file feels like a mini science experiment, consider extracting scoring logic into utils
+
 import React, { useEffect, useState } from "react";
 import { database } from "../../firebases/firebase";
 import { ref, get, runTransaction } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import styles from "../../style/trending.module.css";
 
-const lambda = 0.1; // Decay constant
+const lambda = 0.1; // decay constant
 
+//  quick explainer box about our trending formula
 const TrendingAlgorithmExplanation = () => (
   <div className={styles.explanationContainer}>
     <div className={styles.explanationHeader}>
@@ -21,7 +25,10 @@ const TrendingAlgorithmExplanation = () => (
   </div>
 );
 
+// card for each trending blog, with real-time view count bump
+
 const TrendingBlogCard = ({ blog }) => {
+
   const navigate = useNavigate();
 
   const handleClick = async () => {
@@ -39,6 +46,7 @@ const TrendingBlogCard = ({ blog }) => {
     navigate(`/blog/${blog.id}`);
   };
 
+  // unpack metrics
   const V = blog.seen || 0;
   const L = blog.likes || 0;
   const C = blog.comments ? blog.comments.length : 0;
@@ -50,28 +58,43 @@ const TrendingBlogCard = ({ blog }) => {
 
   return (
     <div className={styles.card} onClick={handleClick}>
+
       {blog.coverImage && (
         <img src={blog.coverImage} alt={blog.title} className={styles.cover} />
       )}
-      <h3 className={styles.title}>{blog.title}</h3>
+
+      <h3 className={styles.title}>
+        {blog.title}
+        </h3>
+
       <p className={styles.meta}>
-        By {blog.author || "Unknown Author"} |  <span className="badge bg-warning" style={{fontSize:'9px', position:'relative',top:"-1px"}}>{blog.category}</span>
+
+        By {blog.author || "Unknown Author"} |  <span className="badge bg-warning" style={{fontSize:'9px', position:'relative',top:"-1px"}}>
+          {blog.category}
+          </span>
+
       </p>
+
       <p className={styles.metrics}>
       <i className="fa-solid fa-eye mn-2"></i> {blog.seen || 0}   | {" "} <i className="fa-solid fa-thumbs-up"></i> {blog.likes || 0} | Comments:{" "}
         {blog.comments ? blog.comments.length : 0}
       </p>
+
       <p className={styles.score} title={scoreTooltip}>
         Trending Score: {blog.trendingScore.toFixed(2)}
       </p>
+
     </div>
   );
 };
+//-----------------------------------//
 
 export default function Trending() {
+
   const [trendingBlogs, setTrendingBlogs] = useState([]);
   const navigate = useNavigate();
 
+  // fetch once on mount
   useEffect(() => {
     const fetchBlogs = async () => {
       const blogsRef = ref(database, "blogs");
@@ -97,12 +120,14 @@ export default function Trending() {
         const sorted = blogsWithScore.sort(
           (a, b) => b.trendingScore - a.trendingScore
         );
-        // Take top 20
+
+        // sort high-to-low and grab top 20
         setTrendingBlogs(sorted.slice(0, 20));
       }
     };
-    fetchBlogs();
-  }, []);
+
+    fetchBlogs ();
+  }, [ ]);
 
   return (
     <div className={styles.container}>

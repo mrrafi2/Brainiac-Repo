@@ -6,6 +6,7 @@ import Blog from "../../blogs/blogCard";
 export default function Popular() {
   const [popularPosts, setPopularPosts] = useState([]);
 
+  //popular post filtering logics
   useEffect(() => {
     const blogsRef = ref(database, "blogs");
     onValue(blogsRef, (snapshot) => {
@@ -13,7 +14,7 @@ export default function Popular() {
       if (data) {
         const posts = Object.entries(data)
           .map(([id, value]) => ({ id, ...value }))
-          // Filter out posts with 0 likes or no likes defined
+          // filter out posts with 0 likes or no likes defined
           .filter((post) => (post.likes || 0) > 0)
           .sort((a, b) => (b.likes || 0) - (a.likes || 0))
           .slice(0, 5);
@@ -37,6 +38,7 @@ export default function Popular() {
           ))}
         </div>
       )}
+
 
       <style>{`
         h5 { 

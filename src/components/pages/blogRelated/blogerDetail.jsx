@@ -1,3 +1,6 @@
+// develop like a  channel for each content writter
+//shows blogger’s avatar, categories, and their blog hits
+
 import React, { useState, useEffect } from "react";
 import { getDatabase, ref, get } from "firebase/database";
 import { useParams, useNavigate } from "react-router-dom";
@@ -5,6 +8,7 @@ import { getAuth } from "firebase/auth";
 import Blog from "../../blogs/blogCard"; 
 import styles from "../../style/blogger.module.css"; 
 
+// generates a consistent color from a string,  easy placeholder avatars
 const getColorFromString = (str) => {
   if (!str) return "#ccc";
   let hash = 0;
@@ -14,44 +18,51 @@ const getColorFromString = (str) => {
   return `hsl(${hash % 360}, 70%, 60%)`;
 };
 
-const BloggerDetail = () => {
-  const { username } = useParams(); 
+const BloggerDetail = ( ) => {
+
+  const { username } = useParams();  // from route
   const [bloggerData, setBloggerData] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const auth = getAuth();
 
+  // the logics----------------------
+    // fetch all blogs once for this author
   useEffect(() => {
     const fetchData = async () => {
       const db = getDatabase();
       const blogsRef = ref(db, "blogs");
       const snapshot = await get(blogsRef);
       const data = snapshot.val();
-
+      
       if (data) {
         const allBlogs = Object.entries(data).map(([id, blog]) => ({ id, ...blog }));
+
+        // filter to this blogger only
         const bloggerBlogs = allBlogs.filter((blog) => blog.author === username);
         setBlogs(bloggerBlogs);
 
-        // Extract unique categories
-        const uniqueCategories = [...new Set(bloggerBlogs.map((blog) => blog.category))];
+        // then extract unique categories
+        const uniqueCategories = [...new Set(bloggerBlogs.map((blog) => blog.category) ) ];
         setCategories(uniqueCategories);
 
-        // Set blogger data if blogs exist
+        // set blogger data if blogs exist
         if (bloggerBlogs.length) {
           setBloggerData({
             author: username,
             avatarColor: getColorFromString(username),
-          });
+          } );
         }
       }
     };
 
     fetchData();
-  }, [username]);
+  }, [username]
+);
 
   if (!bloggerData) {
+
     return (
       <div className={styles.loadingContainer}>
         <span className="spinner-border" style={{ color: '#ff6600', opacity: 0.7 }}></span>
@@ -59,6 +70,7 @@ const BloggerDetail = () => {
     );
   }
 
+  // compute top 4 by likes
   const mostPopularBlogs = [...blogs]
     .sort((a, b) => b.likes - a.likes)
     .slice(0, 4);
@@ -66,7 +78,7 @@ const BloggerDetail = () => {
   return (
     <div className={styles.bloggerDetailPage}>
       <div className={styles.bloggerHeader}>
-        {/* Accent line at top */}
+       
         <div
           className={styles.headerLine}
           style={{ backgroundColor: bloggerData.avatarColor }}
@@ -97,7 +109,7 @@ const BloggerDetail = () => {
           </div>
         </div>
 
-        {/* Accent line at bottom */}
+        
         <div
           className={`${styles.headerLine} shadow-sm`}
           style={{ backgroundColor: bloggerData.avatarColor }}

@@ -1,10 +1,14 @@
+// one-stop category feed: recent, popular, paginated
+// tips: debounce page changes if data refetching is needed
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { database } from "../../firebases/firebase";
 import { ref, get } from "firebase/database";
-import Blog from "../../blogs/blogCard"; // Using Blog component that updates seen count
-// Note: blogP2 is no longer used since Blog component handles its own thumbnail
-export default function CategoryPage() {
+import Blog from "../../blogs/blogCard"; // using Blog component that updates seen count
+
+export default function CategoryPage( ) {
+
   const { categoryName } = useParams();
   const [categoryPosts, setCategoryPosts] = useState([]);
   const [recentPosts, setRecentPosts] = useState([]);
@@ -13,6 +17,9 @@ export default function CategoryPage() {
   const [totalPages, setTotalPages] = useState(1); 
 
   const blogsPerPage = 8;
+ 
+  // de logics---
+  // fetch and filter posts by category
   useEffect(() => {
     const blogsRef = ref(database, "blogs");
     get(blogsRef).then((snapshot) => {
@@ -26,7 +33,7 @@ export default function CategoryPage() {
           );
         setCategoryPosts(filteredPosts);
 
-        // Most recent 2 posts (by date)
+        // most recent 2 posts (by date)
         const sortedByDate = [...filteredPosts].sort(
           (a, b) => new Date(b.date) - new Date(a.date)
         );
@@ -36,18 +43,20 @@ export default function CategoryPage() {
         const sortedByLikes = [...filteredPosts].sort((a, b) => b.likes - a.likes);
         setPopularPosts(sortedByLikes.slice(0, 5));
 
-        // Calculate total pages
+        //   compute total pages
         setTotalPages(Math.ceil(filteredPosts.length / blogsPerPage));
       }
-    });
+    }
+  );
   }, [categoryName]);
 
-  // Slice posts for current page
+  // slice posts for current page
   const displayedPosts = categoryPosts.slice(
     (currentPage - 1) * blogsPerPage,
     currentPage * blogsPerPage
   );
 
+  // page change handler
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -77,7 +86,10 @@ export default function CategoryPage() {
                   {pageNumber + 1}
                 </button>
               </li>
-            ))}
+            )
+          )
+            }
+
             <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
               <button
                 className="page-link ms-1"
@@ -90,6 +102,9 @@ export default function CategoryPage() {
         </nav>
       </div>
 
+      {/* -------------- */}
+      
+       {/* Main content grid + sidebar */}
       <div className="container my-5">
         <h2 className="text-center mb-5 category-title">
           {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} Blogs

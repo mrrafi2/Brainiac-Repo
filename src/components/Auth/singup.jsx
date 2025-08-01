@@ -1,3 +1,4 @@
+// simple user registration with password confirmation and terms checkbox
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -101,7 +102,6 @@ export default function Signup() {
                   </div>
                 </div>
 
-                {/* Confirm Password */}
                 <div className={styles.inputGroup}>
                   <input
                     type={showPassword ? "text" : "password"}
@@ -116,7 +116,7 @@ export default function Signup() {
                   </div>
                 </div>
 
-                {/* Show Password & Agree */}
+                {/* show password & agree */}
                 <div className={styles.checkboxGroup}>
                   <input
                     type="checkbox"
@@ -177,5 +177,6 @@ export default function Signup() {
       </div>
     </div>
   );
+  // TODO: extract validation logic into custom hook (useForm?)
 }
 

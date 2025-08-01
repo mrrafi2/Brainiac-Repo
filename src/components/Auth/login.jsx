@@ -1,5 +1,4 @@
-
-
+//simple login form with toggleable password visibility
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -102,6 +101,8 @@ const Login = () => {
     </div>
   );
 };
+
+// TODO: add OAuth buttons for Google/Facebook
 
 export default Login;
 

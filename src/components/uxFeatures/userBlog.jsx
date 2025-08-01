@@ -4,7 +4,7 @@ import { ref, onValue } from "firebase/database";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-export default function Recent() {
+export default function UsersBlog() {
   const { currentUser } = useAuth();
   const [recentPosts, setRecentPosts] = useState([]);
   const navigate = useNavigate();

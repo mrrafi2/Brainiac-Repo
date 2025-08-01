@@ -1,3 +1,6 @@
+// shows your saved post for later reading (no more “where did I see that?” moments)
+// Tips: debounce onValue listener if performance lags with many bookmarks
+
 import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -5,25 +8,30 @@ import { useNavigate } from "react-router-dom";
 import styles from "../style/bookmark.module.css"; 
 
 export default function Bookmarks() {
+
   const [bookmarks, setBookmarks] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
+    // watch auth status
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+
       if (!user) {
         console.log("No current user");
         setCurrentUser(null);
-        setBookmarks([]);
+        setBookmarks([ ]);  // clear stale data
       } else {
         setCurrentUser(user);
       }
-    });
+    } );
     return () => unsubscribe();
-  }, []);
+  }, [] 
+);
 
-  useEffect(() => {
+  // load bookmarks when user arrives
+  useEffect(( ) => {
     if (!currentUser) return;
     const db = getDatabase();
     const bookmarksRef = ref(db, `bookmarks/${currentUser.uid}`);
@@ -47,7 +55,8 @@ export default function Bookmarks() {
       }
     );
     return () => unsubscribe();
-  }, [currentUser]);
+  }, [currentUser]
+);
 
   const handleClick = (blogId) => {
     if (blogId) navigate(`/blog/${blogId}`);

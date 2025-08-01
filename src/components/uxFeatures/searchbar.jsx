@@ -1,3 +1,6 @@
+// magic text box that finds your blogs by title, category, or secret keywords
+// Todo: throttle `handleSearch` to lighten the CPU load
+
 import { useEffect, useState, useRef } from "react";
 import { getDatabase, ref, get, update } from "firebase/database";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +9,7 @@ import { Search } from "lucide-react";
 
 
 export default function SearchBar() {
+
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [showOverlay, setShowOverlay] = useState(false);
@@ -14,7 +18,7 @@ export default function SearchBar() {
   const containerRef = useRef(null);
   const navigate = useNavigate();
 
-  // Fetch blogs on mount.
+    // load every blog once, so we can ninja-search them
   useEffect(() => {
     const fetchBlogs = async () => {
       const db = getDatabase();
@@ -36,9 +40,12 @@ export default function SearchBar() {
         console.error("Error fetching blogs:", error);
       }
     };
-    fetchBlogs();
-  }, []);
 
+    fetchBlogs();
+  }, []
+);
+
+  // position the overlay next to the input field
   useEffect(() => {
     if (showOverlay && containerRef.current) {
     const rect = containerRef.current.getBoundingClientRect();
@@ -57,8 +64,8 @@ export default function SearchBar() {
     } else if (isTablet) {
       overlayHeight = '70vh';
     }
-
-    setOverlayStyle({
+     // TODO: adjust for table/desktop breakpoints
+    setOverlayStyle ({
       position:"fixed",
       top: rect.bottom + 10,
       left: overlayLeft,
@@ -70,20 +77,23 @@ export default function SearchBar() {
       zIndex: 999,
       padding: '20px',
       maxWidth: '600px',
-    });
+    } );
   }
-}, [showOverlay]);
+}, [showOverlay]
+);
 
   
   const handleSearch = (e) => {
     const searchTerm = e.target.value.trim().toLowerCase();
     setQuery(searchTerm);
 
+        // split into words, match any in title/category/keywords
     if (searchTerm) {
       const searchWords = searchTerm.split(" ").filter((word) => word !== "");
       const normalizedSearch = searchTerm.replace(/\s+/g, "");
 
       const filteredResults = blogs.filter((post) => {
+        
         const title = post.title ? post.title.toLowerCase() : "";
         const category = post.category ? post.category.toLowerCase() : "";
         let keywords = "";

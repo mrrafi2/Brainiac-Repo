@@ -26,7 +26,7 @@ export default function Rankings() {
         const blogsArray = Object.entries(data).map(([id, blog]) => ({
           id,
           ...blog,
-        }));
+        } ) );
 
         const authorStats = {};
         blogsArray.forEach((blog) => {
