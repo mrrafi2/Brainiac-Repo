@@ -18,6 +18,19 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
+function removeSplashOnce() {
+  try {
+    const splash = document.getElementById("brainiac-splash");
+    if (!splash) return;
+    splash.classList.add("hide");
+    setTimeout(() => {
+      if (splash.parentNode) splash.parentNode.removeChild(splash);
+    }, 1120);
+  } catch (e) {
+    // silent fail
+  }
+}
+
 export function AuthProvider({ children }) {
 
   const [loading, setLoading] = useState(true);  // auth in progress
@@ -29,6 +42,7 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
+       setTimeout( removeSplashOnce, 50 );
     }
   );
     return unsubscribe;

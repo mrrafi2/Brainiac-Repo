@@ -45,13 +45,139 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css"/>
 
+  <style>
+      /* base paint to avoid white flash */
+      html,body {
+        height: 100%;
+        margin: 0;
+        background: linear-gradient(180deg,#fbfdff 0%, #f4f7fb 100%);
+        color: #0f172a;
+        -webkit-font-smoothing:antialiased;
+        text-rendering:optimizeLegibility;
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      }
 
-    <!-- Vite injects CSS & JS -->
+      /* splash sits above everything until removed by JS */
+      #brainiac-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      /* subtle centered card that hints 'blog' with lines */
+      .b-card {
+        width: clamp(220px, 36vw, 520px);
+        max-width: 86%;
+        border-radius: 10px;
+        padding: 18px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(250,250,252,0.9));
+        box-shadow: 0 8px 30px rgba(16,24,40,0.06);
+        display: grid;
+        gap: 10px;
+        align-items: center;
+        pointer-events: none;
+      }
+
+      /* thin title block */
+      .b-title {
+        height: 14px;
+        width: 52%;
+        border-radius: 6px;
+        background: linear-gradient(90deg,#e6eef8,#ffffff);
+        box-shadow: inset 0 -1px 0 rgba(0,0,0,0.02);
+      }
+
+      /* three lines mimicking paragraphs */
+      .b-line {
+        height: 10px;
+        width: 100%;
+        border-radius: 6px;
+        background: linear-gradient(90deg, rgba(230,238,248,0.9), rgba(255,255,255,0.95));
+      }
+
+      .b-line.short { width: 62%; }
+
+      .b-card::after {
+        content: "";
+        position: absolute;
+        left: -40%;
+        top: 0;
+        width: 40%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        transform: skewX(-12deg);
+        opacity: 0.0;
+        animation: card-shine 2.4s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      @keyframes card-shine {
+        0% { left: -40%; opacity: 0; }
+        40% { left: 40%; opacity: 0.25; }
+        100% { left: 120%; opacity: 0; }
+      }
+
+      .b-accent {
+        position: absolute;
+        right: 6%;
+        top: 18%;
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        background: rgba(79,70,229,0.06);
+        box-shadow: 0 2px 8px rgba(79,70,229,0.03);
+        transform-origin: center;
+        animation: float-tilt 3.8s ease-in-out infinite;
+      }
+
+      @keyframes float-tilt {
+        0% { transform: translateY(0) rotate(-1deg); }
+        50% { transform: translateY(-6px) rotate(1deg); }
+        100% { transform: translateY(0) rotate(-1deg); }
+      }
+
+      /* hide splash cleanly when JS toggles class */
+      #brainiac-splash.hide {
+        transition: opacity 260ms ease, visibility 260ms;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      /* accessible preference: stop animations */
+      @media (prefers-reduced-motion: reduce) {
+        .b-card::after, .b-accent { animation: none !important; }
+      }
+
+      @media (max-width:420px) {
+        .b-card { padding: 14px; gap:8px; }
+        .b-accent { right: 4%; top: 14%; width: 18px; height:18px; }
+      }
+    </style>
+
   </head>
+
   <body class="bg-gray-100 text-gray-900 font-inter">
     <noscript>
       <strong>JavaScript is required to run Brainiac. Please enable it in your browser settings.</strong>
     </noscript>
+
+    <div id="brainiac-splash" aria-hidden="true">
+      <div class="b-card" role="img" aria-label="loading">
+        <div class="b-title"></div>
+        <div class="b-line"></div>
+        <div class="b-line"></div>
+        <div class="b-line short"></div>
+      </div>
+
+      <div class="b-accent" aria-hidden="true"></div>
+    </div>
+
+
     <div id="root"></div>
     <div id="portal"></div>
 
